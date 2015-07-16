@@ -14,7 +14,8 @@
     "angular-animate": "1.4",
     "bootstrap-css": "3.3",
     "angular-bootstrap": "~0.13.0",
-    "angularAMD": "0.2.1"
+    "angularAMD": "0.2.1",
+    "angular-ui-router-tabs": "~1.5.0"
   },
   "resolutions": {
     "angular": "~1.4.2"

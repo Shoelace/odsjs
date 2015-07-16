@@ -98,4 +98,42 @@ odsjsApp.controller('odsjsAppCtrl',
 	}
     
     
-    }]);        
+    }]);      
+
+
+var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($rootScope, $state, $scope) {
+
+  $scope.initialise = function() {
+
+    $scope.go = function(state) {
+      $state.go(state);
+    };
+
+    $scope.tabData   = [
+      {
+        heading: 'Details',
+        route:   'job.details'
+      },
+      {
+        heading: 'Notifcations',
+        route:   'job.notifications'
+      },
+      {
+        heading: 'Job Arguments',
+        route:   'job.arguments'
+      },
+      {
+        heading: 'Properties',
+        route:   'job.properties'
+      },
+      {
+        heading: 'Run Log',
+        route:   'job.runlog'
+      }
+    ];
+  };
+
+  $scope.initialise();
+}];
+
+odsjsApp.controller('ExampleCtrl', ExampleCtrl);
