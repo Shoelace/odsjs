@@ -15,7 +15,7 @@ if (empty($q) ){
 }
 
 #$c = oci_pconnect("phphol", "welcome", "//localhost/orcl:pooled");
-//$conn = oci_pconnect("s06dp3", "esbdpb3", "//abwdb.admin.abdn.ac.uk/esbdev");
+//$conn = oci_pconnect("", "", "//abwdb.admin.abdn.ac.uk/esbdev");
 $conn = oci_pconnect("system", "manager", "//localhost/XE");
 
 $stid = oci_parse($conn, "$q");
