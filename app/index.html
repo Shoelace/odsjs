@@ -1,4 +1,4 @@
-<html ng-app="odsjs" ng-strict-di ng-csp>
+<html ng-app="odsjs" >
     <HEAD>
         <meta charset="utf-8">
 
@@ -14,23 +14,21 @@
         <script src="bower_components/angular-bootswatch/directive.js"></script>
         <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
        <script src="bower_components/angular-ui-router-tabs/src/ui-router-tabs.js"></script>
+        <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
 
         <!--
                 <script src="bower_components/angular-route/angular-route.js"></script>
 
-        <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
         -->
 
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/controller.js"></script>
 
-
-
         <style>
             .st-selected {
                 background: #ff6eff !important;
             }
-            td
+            .table>tbody>tr>td
 {
   font-family: monospace;
   white-space:nowrap;
@@ -41,6 +39,8 @@
         </style>
     </HEAD>
     <body >
+        
+        <a ui-sref="job.details">jobdetails</a>
             <slThemeSwitcher></slThemeSwitcher>
             
         <div ng-controller="odsjsAppCtrl">
@@ -49,7 +49,7 @@
             
             <label>Job:
     <select ng-model="currentJob" required=true ng-options="job.JOB_NAME group by job.OWNER for (key,job) in jobData"
-            ng-change="loadprogram(currentJob)"
+            ng-change="loaddata()"
             ></select>
   </label><br/>
               <div ui-view></div>
@@ -96,20 +96,7 @@
     <tab heading="Job Arguments"></tab>
     <tab heading="Properties"></tab>
             <tab heading="Run Log" disable="!joblogReady">
-<pre>query:{{joblogquery}}</pre>
-            <table st-table="displayJoblog"  st-safe-src="joblogData" class="table" border=1 ng-show="joblogReady">
-                <thead>
-                    <tr>
-                        <th ng-repeat="(key, value) in displayJoblog[0]" ng-if="key != 'isSelected'"> {{key}} </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr st-select-row="data" st-select-mode="single" ng-repeat="data in displayJoblog"  ng-click="loadlog4(data)">
-                        <td ng-repeat="(key,d) in data" ng-if="key != 'isSelected'" >{{d}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <pre>joblogData{{joblogData}}</pre>    
+ 
             </tab>
             <tab heading="Log4" disable="!joblog4Ready">
             <pre>query:{{joblog4query}}</pre>

@@ -6,9 +6,10 @@
 */
 
 odsjsApp.controller('odsjsAppCtrl',
-    ['$scope','$http',
-    function($scope,$http){
-        
+    ['$scope','$http','$stateParams',
+    function($scope,$http,$stateParams){
+
+          console.log("appctrl stateparams="+JSON.stringify($stateParams));
         $scope.jobData=[];
         $scope.programData=[];
         $scope.joblogData=[];
@@ -20,17 +21,21 @@ odsjsApp.controller('odsjsAppCtrl',
 		.success(function(response){
 		    $scope.jobData=response;
                     if ($scope.jobData.length == 1)
-                        $scope.currentJob = $scope.jobData[0] 
+                        $scope.currentJob = $scope.jobData[0] ;
+                        $scope.loaddata();
 		})
 		.error(function(){
 		});
+        
+        $scope.loaddata = function(){
+             $scope.loadprogram($scope.currentJob);
+             $scope.loadjoblog($scope.currentJob);
+             $scope.loadlog4($scope.currentJob);
+             $scope.loadnotifications($scope.currentJob);
+             
+        }
 
       $scope.loadprogram = function(jobdetails) {
-          
-
-          $scope.loadjoblog(jobdetails);
-
-          
           $scope.progquery = "select owner, program_name, enabled, program_type, program_action, number_of_arguments "
                 + " from dba_SCHEDULER_PROGRAMS " +
                   " where 1=1 " +
@@ -62,7 +67,6 @@ odsjsApp.controller('odsjsAppCtrl',
                   " order by log_date"
           ;
           
-          
           $scope.joblogReady = false;
 		$http.get("get_oracle_data.php?sqlStr="
                 + $scope.joblogquery)
@@ -73,6 +77,22 @@ odsjsApp.controller('odsjsAppCtrl',
 			})
 		.error(function(){
 		});
+$scope.jobrundetailquery = "select * "
+                 +" from ALL_SCHEDULER_JOB_RUN_DETAILS " +
+                  " where 1=1 " +
+                  " and owner = '" + jobdetails.OWNER  +"'" +
+                  " and job_name = '" + jobdetails.JOB_NAME  +"'" +
+                  " order by log_date"
+          ;
+          
+		$http.get("get_oracle_data.php?sqlStr="
+                + $scope.jobrundetailquery)
+		.success(function(response){
+                    console.log('response received')
+			$scope.jobrundetailData=response;
+			})
+		.error(function(){
+		});        
 	}
         
          $scope.loadlog4 = function(jobdetails) {
@@ -97,11 +117,33 @@ odsjsApp.controller('odsjsAppCtrl',
 		});
 	}
     
-    
+    $scope.loadnotifications = function(jobdetails) {
+          console.log("loading notifications")
+          $scope.jobnotificationquery = "select recipient,sender, subject, body, filter_condition, LISTAGG(event, ', ') within group (order by EVENT_FLAG) events "
+                 +" from ALL_SCHEDULER_NOTIFICATIONS " +
+                  " where 1=1 " +
+                  " and owner = '" + jobdetails.OWNER  + "'" +
+                  " and job_name = '" + jobdetails.JOB_NAME  + "'" +
+                  " group by owner,job_name, job_subname, recipient,sender, subject, body, filter_condition"
+          ;
+          
+          $scope.jobnotificationData=[];
+          $scope.jobnotificationReady = false;
+		$http.get("get_oracle_data.php?sqlStr="
+                + $scope.jobnotificationquery)
+		.success(function(response){
+                    console.log('response received')
+			$scope.jobnotificationData=response;
+                        $scope.jobnotificationReady = true;
+			})
+		.error(function(){
+		});
+	}
     }]);      
 
 
-var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($rootScope, $state, $scope) {
+var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($rootScope, $state, $scope,$stateParams) {
+
 
   $scope.initialise = function() {
 
@@ -130,10 +172,12 @@ var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($r
         heading: 'Run Log',
         route:   'job.runlog'
       }
+      
     ];
   };
 
   $scope.initialise();
+
 }];
 
 odsjsApp.controller('ExampleCtrl', ExampleCtrl);

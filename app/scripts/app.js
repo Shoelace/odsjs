@@ -14,24 +14,26 @@ odsjsApp.config(['$stateProvider', function($stateProvider) {
     controller: 'ExampleCtrl',
     templateUrl: 'example.html'
   }).state('job.details', {
-    url:         '/job/details',
+    url:         '/job/{jowner}/{jname}/details',
+    controller: 'odsjsAppCtrl',
+
     templateUrl: 'jobdetails.html'
   }).state('job.notifications', {
     url:         '/job/notifications',
-    controller: 'SettingsCtrl',
-    templateUrl: 'user/settings/settings.html'
+    //controller: 'SettingsCtrl',
+    templateUrl: 'jobnotifcations.html'
   }).state('job.arguments', {
     url:         '/job/arguments',
-    template: '<div>Settings nested route 1</div>'
+    templateUrl: 'jobdetails.html'
   }).state('job.properties', {
     url:         '/job/properties',
-    template: '<div>Settings nested route 2</div>'
+    templateUrl: 'jobproperties.html'
   }).state('job.runlog', {
     url:         '/job/runlog',
-    template: '<div>Settings nested route 2</div>'
+    templateUrl: 'jobrunlog.html'
   }).state('job.runlog.log4', {
     url:         '/log4',
-    template: '<div>Settings nested route 2</div>'
+    templateUrl: 'jobdetails.html'
   });
 }]);
 /*

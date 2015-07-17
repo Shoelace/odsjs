@@ -1,9 +1,16 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
-?>
+
+// Include database credentials.
+require_once('config.inc.php');
 
 
-<?php
+$conn = oci_pconnect(DB_USER, DB_PASS, DB_CONNECTIONSTRING);
+if (!$conn) {
+    $m = oci_error();
+    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+}
+
 $q = $_GET['sqlStr'];
 $l = $_GET['limit'];
 $s = $_GET['skip'];
@@ -14,11 +21,10 @@ if (empty($q) ){
  print '[]';
 }
 
-#$c = oci_pconnect("phphol", "welcome", "//localhost/orcl:pooled");
-//$conn = oci_pconnect("", "", "//abwdb.admin.abdn.ac.uk/esbdev");
-$conn = oci_pconnect("system", "manager", "//localhost/XE");
 
 $stid = oci_parse($conn, "$q");
+
+oci_set_prefetch($stid, 500);  // Set before calling oci_execute()
 
 $r = oci_execute($stid);
 
