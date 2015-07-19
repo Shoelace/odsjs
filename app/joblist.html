@@ -1,0 +1,12 @@
+<table st-table="displayJobData"  st-safe-src="jobData" class="table" border=1 >
+    <thead>
+        <tr>
+            <th ng-repeat="(key, value) in displayJobData[0]" ng-if="key != 'isSelected'"> {{key}} </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  ng-repeat="data in displayJobData">
+                    <td><a ui-sref="scheduler.jobdetails({jowner: data.OWNER, jname: data.JOB_NAME}) ">details</a></td> <td ng-repeat="(key,d) in data" ng-if="key != 'isSelected'" >{{d}}</td>
+        </tr>
+    </tbody>
+</table>

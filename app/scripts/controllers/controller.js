@@ -8,8 +8,64 @@
 odsjsApp.controller('odsjsAppCtrl',
     ['$scope','$http','$stateParams',
     function($scope,$http,$stateParams){
-
+    $scope.tabData   = [
+      {
+        heading: 'Jobs',
+        route:   'scheduler.joblist'
+      },
+      {
+        heading: 'Programs',
+        route:   'scheduler.programlist'
+      },
+      {
+        heading: 'windows',
+        route:   'scheduler.windowlist'
+      }
+    ];
+    
+    
+    }]);
+        
+        
+odsjsApp.controller('odsjsAppJobCtrl',
+    ['$scope','$http','$stateParams',
+    function($scope,$http,$stateParams){
+        
           console.log("appctrl stateparams="+JSON.stringify($stateParams));
+ 
+        $scope.initialise = function() {
+console.log('init');
+    $scope.go = function(state) {
+      $state.go(state);
+    };
+
+    $scope.tabData   = [
+      {
+        heading: 'Details',
+        route:   'job.details'
+      },
+      {
+        heading: 'Notifcations',
+        route:   'job.notifications'
+      },
+      {
+        heading: 'Job Arguments',
+        route:   'job.arguments'
+      },
+      {
+        heading: 'Properties',
+        route:   'job.properties'
+      },
+      {
+        heading: 'Run Log',
+        route:   'job.runlog'
+      }
+      
+    ];
+  };
+
+  $scope.initialise();
+
         $scope.jobData=[];
         $scope.programData=[];
         $scope.joblogData=[];
@@ -28,14 +84,19 @@ odsjsApp.controller('odsjsAppCtrl',
 		});
         
         $scope.loaddata = function(){
+            if($scope.currentJob){
              $scope.loadprogram($scope.currentJob);
              $scope.loadjoblog($scope.currentJob);
              $scope.loadlog4($scope.currentJob);
              $scope.loadnotifications($scope.currentJob);
-             
+         }
         }
 
       $scope.loadprogram = function(jobdetails) {
+          
+          if( ! jobdetails || !jobdetails.PROGRAM_OWNER )
+              return;
+          
           $scope.progquery = "select owner, program_name, enabled, program_type, program_action, number_of_arguments "
                 + " from dba_SCHEDULER_PROGRAMS " +
                   " where 1=1 " +
@@ -58,7 +119,9 @@ odsjsApp.controller('odsjsAppCtrl',
 	}
         
         $scope.loadjoblog = function(jobdetails) {
-          
+
+           if( ! jobdetails || !jobdetails.OWNER )
+              return;
           $scope.joblogquery = "select log_id,log_date, operation,status, user_name "
                  +" from ALL_SCHEDULER_JOB_LOG " +
                   " where 1=1 " +
@@ -142,42 +205,3 @@ $scope.jobrundetailquery = "select * "
     }]);      
 
 
-var ExampleCtrl = ['$rootScope', '$state', '$scope', '$stateParams', function($rootScope, $state, $scope,$stateParams) {
-
-
-  $scope.initialise = function() {
-
-    $scope.go = function(state) {
-      $state.go(state);
-    };
-
-    $scope.tabData   = [
-      {
-        heading: 'Details',
-        route:   'job.details'
-      },
-      {
-        heading: 'Notifcations',
-        route:   'job.notifications'
-      },
-      {
-        heading: 'Job Arguments',
-        route:   'job.arguments'
-      },
-      {
-        heading: 'Properties',
-        route:   'job.properties'
-      },
-      {
-        heading: 'Run Log',
-        route:   'job.runlog'
-      }
-      
-    ];
-  };
-
-  $scope.initialise();
-
-}];
-
-odsjsApp.controller('ExampleCtrl', ExampleCtrl);

@@ -9,18 +9,23 @@ var odsjsApp = angular.module('odsjs',
 
 
 odsjsApp.config(['$stateProvider', function($stateProvider) {
-  $stateProvider.state('job', {
-    url:         '',
-    controller: 'ExampleCtrl',
-    templateUrl: 'example.html'
-  }).state('job.details', {
+  $stateProvider
+          .state('scheduler', { url: '', template: '<tabs data="tabData" type="pills"></tabs><div ui-view></div>'})
+    .state('window', {
+    url:         '/window',
+    template: 'list of windows here'
+  }).state('scheduler.joblist', {
+    url:         '/job/list',
+    controller: 'odsjsAppJobCtrl',
+    templateUrl: 'joblist.html'
+  }).state('scheduler.jobdetails', {
     url:         '/job/{jowner}/{jname}/details',
-    controller: 'odsjsAppCtrl',
-
-    templateUrl: 'jobdetails.html'
+    templateUrl: 'jobdetails.html',
+    controller: 'odsjsAppJobCtrl'
+    
+    
   }).state('job.notifications', {
-    url:         '/job/notifications',
-    //controller: 'SettingsCtrl',
+    url:         'notifications',
     templateUrl: 'jobnotifcations.html'
   }).state('job.arguments', {
     url:         '/job/arguments',
@@ -32,8 +37,9 @@ odsjsApp.config(['$stateProvider', function($stateProvider) {
     url:         '/job/runlog',
     templateUrl: 'jobrunlog.html'
   }).state('job.runlog.log4', {
-    url:         '/log4',
-    templateUrl: 'jobdetails.html'
+    url:         '/log4/{log4id}',
+    //templateUrl: 'jobrunlog.html'
+    template: 'welcome to log4'
   });
 }]);
 /*
