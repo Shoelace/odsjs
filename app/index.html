@@ -1,28 +1,22 @@
 <html ng-app="odsjs" >
     <HEAD>
         <meta charset="utf-8">
+         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <style>
+        /* This helps the ng-show/ng-hide animations start at the right place. */
+        /* Since Angular has this but needs to load, this gives us the class early. 
+        .ng-hide {
+            display: none!important;
+        }
+        */
+    </style>
 
-        <!-- Bootstrap -->
+        <!-- inject-vendor:css -->
         <link href="bower_components/bootstrap-css/css/bootstrap.min.css" rel="stylesheet">
-
-        <script src="bower_components/jquery/dist/jquery.js"></script>
-
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-animate/angular-animate.js"></script>
-        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-        <script src="bower_components/angular-smart-table/dist/smart-table.min.js"></script>   
-        <script src="bower_components/angular-bootswatch/directive.js"></script>
-        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-       <script src="bower_components/angular-ui-router-tabs/src/ui-router-tabs.js"></script>
-        <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
-
-        <!--
-                <script src="bower_components/angular-route/angular-route.js"></script>
-
-        -->
-
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/controller.js"></script>
+        <!-- endinject -->
+        
+       
 
         <style>
             .st-selected {
@@ -40,90 +34,53 @@
     </HEAD>
     <body >
         
-        <a ui-sref="job.details">jobdetails</a>
+        <!--
+        <div>
+        <div data-ng-include="'app/layout/shell.html'"></div>
+    </div>
+        <div ng-controller="odsjsAppCtrl">
+              <div ui-view></div>
+        </div>
+        -->
+        
             <slThemeSwitcher></slThemeSwitcher>
             
-        <div ng-controller="odsjsAppCtrl">
 
-            <pre>data{{jobDat}}</pre>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand" ui-sref="index">Quick Start</a>
+      <ul class="nav">
+        <li><a ui-sref="index">Home</a></li>
+        <li><a ui-sref="job">job</a></li>
+        <li><a ui-sref="route2">Route 2</a></li>
+      </ul>
+    </div>
+  </div>
             
-            <label>Job:
-    <select ng-model="currentJob" required=true ng-options="job.JOB_NAME group by job.OWNER for (key,job) in jobData"
-            ng-change="loaddata()"
-            ></select>
-  </label><br/>
-              <div ui-view></div>
             
-<!--
-              <tabset >
+            <div ui-view="viewA"></div>
+            <hr/>
+            <div ui-view="viewB"></div>
 
-      <tab heading="Job details" >
-            <table st-table="currentJob"  class="table" border=1 >
-                <thead>
-                    <tr>
-                        <th > Name</th>
-                        <th > Value</th>
-                    </tr>	
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(key,value) in currentJob" >
-                        <td  >{{key}}</td><td  >{{value}}</td>
-                    </tr>
-                </tbody>
-            </table>
-          
-      </tab>
+        <!-- inject-vendor:js -->
+             <script src="bower_components/jquery/dist/jquery.js"></script>
 
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="bower_components/angular-smart-table/dist/smart-table.min.js"></script>   
+        <script src="bower_components/angular-bootswatch/directive.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+       <script src="bower_components/angular-ui-router-tabs/src/ui-router-tabs.js"></script>
+        <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
+       <!-- endinject -->
 
-    <tab heading="Program details" disable="!currentJob.PROGRAM_NAME">
-
-            <pre>query:{{progquery}}</pre>
-            <table st-table="displayPrograms"  st-safe-src="programData" class="table" border=1 ng-show="programReady">
-                <thead>
-                    <tr>
-                        <th ng-repeat="(key, value) in displayPrograms[0]" ng-if="key != 'isSelected'"> {{key}} </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr st-select-row="data" st-select-mode="single" ng-repeat="data in displayPrograms" >
-                        <td ng-repeat="(key,d) in data" ng-if="key != 'isSelected'">{{d}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <pre>data{{programData}}</pre>
-            </tab>
-    <tab heading="Notifications"></tab>
-    <tab heading="Job Arguments"></tab>
-    <tab heading="Properties"></tab>
-            <tab heading="Run Log" disable="!joblogReady">
- 
-            </tab>
-            <tab heading="Log4" disable="!joblog4Ready">
-            <pre>query:{{joblog4query}}</pre>
-            <table st-table="displayJoblog4"  st-safe-src="joblog4Data" class="table" border=1 ng-show="joblog4Ready">
-                <thead>
-                    <tr>
-                        <th ng-repeat="(key, value) in displayJoblog4[0]" ng-if="key != 'isSelected'"> {{key}} </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr st-select-row="data" st-select-mode="single" ng-repeat="data in displayJoblog4">
-                        <td ng-repeat="d in data" >{{d}}</td>
-                    </tr>
-                </tbody>
-                  <tfoot>
-			<tr>
-				<td colspan="6" class="text-center">
-					<div st-pagination="" st-items-by-page="50" st-displayed-pages="9"></div>
-				</td>
-			</tr>
-		</tfoot>                
-            </table>
-            <pre>joblog4Data{{joblog4Data}}</pre>     
-            </tab>
-            </tabset>
--->            
-        </div>
-
+        <!-- Bootstrapping -->
+        <script src="scripts/app.module.js"></script>
+        <script src="scripts/app.config.js"></script>
+        <script src="scripts/controllers/controller.js"></script>
+        <script src="scripts/controllers/odsjsAppJobCtrl.js"></script>
+         <!-- other modules go here -->
+        
     </body>
 </html>

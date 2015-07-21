@@ -1,3 +1,5 @@
+ 
+<div ng-Hde="currentJob">
 <table st-table="displayJobData"  st-safe-src="jobData" class="table" border=1 >
     <thead>
         <tr>
@@ -5,8 +7,27 @@
         </tr>
     </thead>
     <tbody>
-        <tr  ng-repeat="data in displayJobData">
-                    <td><a ui-sref="scheduler.jobdetails({jowner: data.OWNER, jname: data.JOB_NAME}) ">details</a></td> <td ng-repeat="(key,d) in data" ng-if="key != 'isSelected'" >{{d}}</td>
+        <tr  st-select-row="data" ng-repeat="data in displayJobData">
+                    <!--<td><a ui-sref="scheduler.job.details({jowner: data.OWNER, jname: data.JOB_NAME}) ">details</a></td> 
+                    <td><a ui-sref="scheduler.job.notifications({jowner: data.OWNER, jname: data.JOB_NAME}) ">ntfn</a></td> 
+                    -->
+                    <td ng-repeat="(key,d) in data" ng-if="key != 'isSelected'" >{{d}}</td>
         </tr>
     </tbody>
 </table>
+</div>
+
+<div ngHide>
+<h3>{{currentJob.OWNER}} - {{currentJob.JOB_NAME}}</h3>
+
+job list tabs
+<tabset>
+    <tab heading="Details" ui-sref=".details({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})" ></tab>
+    <tab heading="Notifications" ui-sref=".notifications({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})" ></tab>
+    <tab heading="Arguments" ui-sref=".arguments({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
+    <tab heading="Properties" ui-sref=".properties({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
+    <tab heading="Run Log" ui-sref=".runlog({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
+</tabset>
+</div>
+    
+<div ui-view="viewc"></div>
