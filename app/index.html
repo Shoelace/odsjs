@@ -44,24 +44,21 @@
         -->
         
             <slThemeSwitcher></slThemeSwitcher>
-            
+           <a ui-sref="index">Home</a>
+<tabset>
+    <tab heading="job" ui-sref="job" ></tab>
+    <tab heading="window"     ui-sref="window"></tab>
+    <tab heading="schedule"    ui-sref="schedule"></tab>
+</tabset>
 
-  <div class="navbar">
-    <div class="navbar-inner">
-      <a class="brand" ui-sref="index">Quick Start</a>
-      <ul class="nav">
-        <li><a ui-sref="index">Home</a></li>
-        <li><a ui-sref="job">job</a></li>
-        <li><a ui-sref="route2">Route 2</a></li>
-      </ul>
-    </div>
-  </div>
             
             
             <div ui-view="viewA"></div>
             <hr/>
             <div ui-view="viewB"></div>
 
+            <div id="allscripts">
+                
         <!-- inject-vendor:js -->
              <script src="bower_components/jquery/dist/jquery.js"></script>
 
@@ -81,6 +78,7 @@
         <script src="scripts/controllers/controller.js"></script>
         <script src="scripts/controllers/odsjsAppJobCtrl.js"></script>
          <!-- other modules go here -->
+            </div>
         
     </body>
 </html>

@@ -11,11 +11,15 @@
 angular.module('odsjs')
 .config( appConfig );
 
-appConfig.$inject = ['$stateProvider'];
+appConfig.$inject = ['$stateProvider','$urlRouterProvider','$locationProvider','$logProvider'];
 
-function appConfig ($stateProvider, $urlRouterProvider) {
-        console.log('config a');
+function appConfig ($stateProvider, $urlRouterProvider,$locationProvider,$logProvider) {
+    
+    $logProvider.debugEnabled(true);
+       console.debug('config a');
         
+//$locationProvider.html5Mode({enabled:true, requireBase:false});
+
 
     $stateProvider
         .state('index', {

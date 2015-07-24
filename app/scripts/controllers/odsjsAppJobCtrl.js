@@ -7,7 +7,7 @@
 
 
 angular.module('odsjs').config( function($stateProvider, $urlRouterProvider) {
-    console.log('config b');
+    console.debug('config b');
     
     // $urlRouterProvider.when("/job", "/job/list");
     /*
@@ -62,18 +62,18 @@ onEnter: function(){console.log("enter job");}
 });
         
 angular.module('odsjs').controller('odsjsAppJobListCtrl',
-    ['$scope','$http','$stateParams','$state',
-    function($scope,$http,$stateParams,$state){
+    ['$scope','$http','$stateParams','$state','$log',
+    function($scope,$http,$stateParams,$state,$log){
         
         $scope.currentJob = {};
 
-   console.log("JobListCtrl state="+Object.keys($state));
-   console.log("JobListCtrl state.params="+JSON.stringify($state.params));
-   console.log("JobListCtrl state.current="+JSON.stringify($state.current));
-   console.log("JobListCtrl state.href="+JSON.stringify($state.href));
-   console.log("JobListCtrl state.transition="+JSON.stringify($state.transition));
-   console.log("JobListCtrl state.transitionTo="+JSON.stringify($state.transitionTo));
-   console.log("JobListCtrl stateparams="+JSON.stringify($stateParams));
+   $log.debug("JobListCtrl state="+Object.keys($state));
+   $log.debug("JobListCtrl state.params="+JSON.stringify($state.params));
+   $log.debug("JobListCtrl state.current="+JSON.stringify($state.current));
+   $log.debug("JobListCtrl state.href="+JSON.stringify($state.href));
+   $log.debug("JobListCtrl state.transition="+JSON.stringify($state.transition));
+   $log.debug("JobListCtrl state.transitionTo="+JSON.stringify($state.transitionTo));
+   $log.debug("JobListCtrl stateparams="+JSON.stringify($stateParams));
 
        // $scope.jowner = $stateParams.jowner;
         //$scope.jname = $stateParams.jname;
@@ -101,39 +101,39 @@ angular.module('odsjs').controller('odsjsAppJobListCtrl',
         // fired when table rows are selected
 $scope.$watch('displayJobData', function(row, oldrow) {
   // get selected row
-   //console.log("row="+JSON.stringify(row));
-   //console.log("oldrow="+JSON.stringify(oldrow));
-   if ( row !== null ) {
-  row.filter(function(r) {
-     if (r.isSelected) {
-         $scope.currentJob = r;
-       console.log('selected'+r);
-       $state.go( 'job.details', {jowner: r.OWNER, jname: r.JOB_NAME} );
-     }
-  })
-   }
+   $scope.hasSelection = false;
 
-}, true);
+   if ( row ) {
+        row.filter(function(r) {
+                        if (r.isSelected) {
+                            $scope.currentJob = r;
+                            $scope.hasSelection = true;
+                          $log.debug('selected'+r);
+                          $state.go( '.', {jowner: r.OWNER, jname: r.JOB_NAME} );
+                        }
+                    })
+    }
+  }, true);
 
 
     }]);      
 
 angular.module('odsjs').controller('odsjsAppJobNtfnCtrl',
-    ['$scope','$http','$stateParams','$state',
-    function($scope,$http,$stateParams,$state){
+    ['$scope','$http','$stateParams','$state','$log',
+    function($scope,$http,$stateParams,$state,$log){
         
         console.log("odsjsAppJobNtfnCtrl");
         
-   console.log("appctrl state="+Object.keys($state));
-   console.log("appctrl state.params="+JSON.stringify($state.params));
-   console.log("appctrl state.current="+JSON.stringify($state.current));
-   console.log("appctrl state.href="+JSON.stringify($state.href));
-   console.log("appctrl state.transition="+JSON.stringify($state.transition));
-   console.log("appctrl state.transitionTo="+JSON.stringify($state.transitionTo));
+   $log.debug("appctrl state="+Object.keys($state));
+   $log.debug("appctrl state.params="+JSON.stringify($state.params));
+   $log.debug("appctrl state.current="+JSON.stringify($state.current));
+   $log.debug("appctrl state.href="+JSON.stringify($state.href));
+   $log.debug("appctrl state.transition="+JSON.stringify($state.transition));
+   $log.debug("appctrl state.transitionTo="+JSON.stringify($state.transitionTo));
    console.log("appctrl stateparams="+JSON.stringify($stateParams));
 
 
-          console.log("loading notifications")
+          $log.info("loading notifications")
           $scope.jobnotificationquery = "select recipient,sender, subject, body, filter_condition, LISTAGG(event, ', ') within group (order by EVENT_FLAG) events "
                  +" from ALL_SCHEDULER_NOTIFICATIONS " +
                   " where 1=1 " +
@@ -147,7 +147,7 @@ angular.module('odsjs').controller('odsjsAppJobNtfnCtrl',
 		$http.get("get_oracle_data.php?sqlStr="
                 + $scope.jobnotificationquery)
 		.success(function(response){
-                    console.log('response received')
+                    $log.debug('response received')
 			$scope.jobnotificationData=response;
                         $scope.jobnotificationReady = true;
 			})
@@ -159,8 +159,8 @@ angular.module('odsjs').controller('odsjsAppJobNtfnCtrl',
     }]);      
 
 angular.module('odsjs').controller('odsjsAppJobPropCtrl',
-    ['$scope','$http','$stateParams','$state','$parent',
-    function($scope,$http,$stateParams,$state,$parent){
+    ['$scope','$http','$stateParams','$state',
+    function($scope,$http,$stateParams,$state){
         
         console.log("odsjsAppJobPropCtrl");
         
@@ -171,8 +171,6 @@ angular.module('odsjs').controller('odsjsAppJobPropCtrl',
    console.log("PropCtrl state.transition="+JSON.stringify($state.transition));
    console.log("PropCtrl state.transitionTo="+JSON.stringify($state.transitionTo));
    console.log("PropCtrl stateparams="+JSON.stringify($stateParams));
-
-   console.log("PropCtrl TAB parent.data="+JSON.stringify($parent.jobtabData));
 
 
          /* console.log("loading notifications")
@@ -204,13 +202,13 @@ angular.module('odsjs').controller('odsjsAppJobPropCtrl',
 
 
 angular.module('odsjs').controller('odsjsAppJobDtlCtrl',
-    ['$scope','$http','$stateParams',
-    function($scope,$http,$stateParams){
+    ['$scope','$http','$stateParams','$log',
+    function($scope,$http,$stateParams,$log){
         
-   console.log("odsjsAppJobDtlCtrl stateparams="+JSON.stringify($stateParams));
+   $log.debug("odsjsAppJobDtlCtrl stateparams="+JSON.stringify($stateParams));
 
          $scope.go = function(state) {
-   console.log('odsjsAppJobDtlCtrl go');
+   $log.debug('odsjsAppJobDtlCtrl go');
       $state.go(state);
     };       
         

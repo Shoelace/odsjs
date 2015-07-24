@@ -17,17 +17,18 @@
 </table>
 </div>
 
-<div ngHide>
+<div ng-Show="hasSelection">
+    <a ui-sref="." ui-sref-opts="{reload: true}">Back</a></li> 
+
 <h3>{{currentJob.OWNER}} - {{currentJob.JOB_NAME}}</h3>
 
-job list tabs
 <tabset>
-    <tab heading="Details" ui-sref=".details({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})" ></tab>
+    <tab heading="Details"       ui-sref=".details({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})" ></tab>
     <tab heading="Notifications" ui-sref=".notifications({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})" ></tab>
-    <tab heading="Arguments" ui-sref=".arguments({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
-    <tab heading="Properties" ui-sref=".properties({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
-    <tab heading="Run Log" ui-sref=".runlog({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
+    <tab heading="Arguments"     ui-sref=".arguments({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
+    <tab heading="Properties"    ui-sref=".properties({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
+    <tab heading="Run Log"       ui-sref=".runlog({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
 </tabset>
-</div>
     
 <div ui-view="viewc"></div>
+</div>
