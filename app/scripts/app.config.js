@@ -17,6 +17,8 @@ function appConfig ($stateProvider, $urlRouterProvider,$locationProvider,$logPro
     
     $logProvider.debugEnabled(true);
        console.debug('config a');
+       
+       $urlRouterProvider.otherwise("/");
         
 //$locationProvider.html5Mode({enabled:true, requireBase:false});
 
@@ -38,7 +40,8 @@ function appConfig ($stateProvider, $urlRouterProvider,$locationProvider,$logPro
             views: {
                 "viewA": {
                     controller: 'odsjsAppJobListCtrl',
-                    templateUrl: 'joblist.html'
+                    controllerAs: 'joblist',
+                    templateUrl: 'job.list.html'
                 },
                 "viewB": {
                     template: "route1.viewB"
@@ -50,7 +53,7 @@ function appConfig ($stateProvider, $urlRouterProvider,$locationProvider,$logPro
             views: {
                 "viewc": {
                     controller: 'odsjsAppJobDtlCtrl',
-                    templateUrl: 'jobdetails.html'
+                    templateUrl: 'job.details.html'
                 },
                 "viewB@": {
                     template: 'selcted view b'
@@ -63,7 +66,7 @@ function appConfig ($stateProvider, $urlRouterProvider,$locationProvider,$logPro
             views: {
                 "viewc": {
                      controller: 'odsjsAppJobNtfnCtrl',
-                     templateUrl: 'jobnotifcations.html'
+                     templateUrl: 'job.notifcations.html'
                 },
                 "viewB@": {
                     template: 'selcted notifications view '
@@ -77,7 +80,7 @@ function appConfig ($stateProvider, $urlRouterProvider,$locationProvider,$logPro
                 "viewc": {
                      //controller: 'odsjsAppJobNtfnCtrl',
                      controller: 'odsjsAppJobPropCtrl',
-                     templateUrl: 'jobproperties.html'
+                     templateUrl: 'job.properties.html'
                 },
                 "viewB@": {
                     template: 'selcted properties view '

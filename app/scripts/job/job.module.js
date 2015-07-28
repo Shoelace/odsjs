@@ -6,7 +6,7 @@
 (function() {
     'use strict';
     
-angular.module('odsjs',
-['smart-table','ui.bootstrap','shoelace.themeSwitcher','ui.router','ui.router.tabs','odsjs.job']);
+angular.module('odsjs.job',
+['smart-table','ui.bootstrap','ui.router','ui.router.tabs']);
 
 })();

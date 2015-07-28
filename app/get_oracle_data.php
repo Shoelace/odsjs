@@ -30,6 +30,7 @@ $r = oci_execute($stid);
 
 $nrows = oci_fetch_all($stid, $res, null, null, OCI_FETCHSTATEMENT_BY_ROW);
 
+
 //echo "$nrows rows fetched<br>\n";
 //var_dump($res);
 
@@ -37,4 +38,5 @@ oci_free_statement($stid);
 oci_close($conn);
 
 print (json_encode($res));
+
 ?>
