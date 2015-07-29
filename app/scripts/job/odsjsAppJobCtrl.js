@@ -61,88 +61,7 @@ onEnter: function(){console.log("enter job");}
     */
 });
         
-angular.module('odsjs').controller('odsjsAppJobListCtrl',
-    ['$scope','$stateParams','$state','$log','dbmsschedulerService',
-    function($scope,$stateParams,$state,$log,dbmsschedulerService){
-        
-        $scope.currentJob = {};
 
-   $log.debug("JobListCtrl state="+Object.keys($state));
-   $log.debug("JobListCtrl state.params="+JSON.stringify($state.params));
-   $log.debug("JobListCtrl state.current="+JSON.stringify($state.current));
-   $log.debug("JobListCtrl state.href="+JSON.stringify($state.href));
-   $log.debug("JobListCtrl state.transition="+JSON.stringify($state.transition));
-   $log.debug("JobListCtrl state.transitionTo="+JSON.stringify($state.transitionTo));
-   $log.debug("JobListCtrl stateparams="+JSON.stringify($stateParams));
-
-       // $scope.jowner = $stateParams.jowner;
-        //$scope.jname = $stateParams.jname;
-
-
-        $scope.jobData=dbmsschedulerService.jobs;
-        dbmsschedulerService.getJobList();
-
-        
-
-        // fired when table rows are selected
-$scope.$watch('displayJobData', function(row, oldrow) {
-  // get selected row
-   $scope.hasSelection = false;
-
-   if ( row ) {
-        row.filter(function(r) {
-                        if (r.isSelected) {
-                            $scope.currentJob = r;
-                            $scope.hasSelection = true;
-                          $log.debug('selected'+r);
-                          $state.go( '.', {jowner: r.OWNER, jname: r.JOB_NAME} );
-                        }
-                    })
-    }
-  }, true);
-
-
-    }]);      
-
-angular.module('odsjs').controller('odsjsAppJobNtfnCtrl',
-    ['$scope','$http','$stateParams','$state','$log',
-    function($scope,$http,$stateParams,$state,$log){
-        
-        console.log("odsjsAppJobNtfnCtrl");
-        
-   $log.debug("appctrl state="+Object.keys($state));
-   $log.debug("appctrl state.params="+JSON.stringify($state.params));
-   $log.debug("appctrl state.current="+JSON.stringify($state.current));
-   $log.debug("appctrl state.href="+JSON.stringify($state.href));
-   $log.debug("appctrl state.transition="+JSON.stringify($state.transition));
-   $log.debug("appctrl state.transitionTo="+JSON.stringify($state.transitionTo));
-   console.log("appctrl stateparams="+JSON.stringify($stateParams));
-
-
-          $log.info("loading notifications")
-          $scope.jobnotificationquery = "select recipient,sender, subject, body, filter_condition, LISTAGG(event, ', ') within group (order by EVENT_FLAG) events "
-                 +" from ALL_SCHEDULER_NOTIFICATIONS " +
-                  " where 1=1 " +
-                  " and owner = '" + $stateParams.jowner  + "'" +
-                  " and job_name = '" + $stateParams.jname  + "'" +
-                  " group by owner,job_name, job_subname, recipient,sender, subject, body, filter_condition"
-          ;
-          
-          $scope.jobnotificationData=[];
-          $scope.jobnotificationReady = false;
-		$http.get("get_oracle_data.php?sqlStr="
-                + $scope.jobnotificationquery)
-		.success(function(response){
-                    $log.debug('response received')
-			$scope.jobnotificationData=response;
-                        $scope.jobnotificationReady = true;
-			})
-		.error(function(){
-		});
-
-        
-
-    }]);      
 
 angular.module('odsjs').controller('odsjsAppJobPropCtrl',
     ['$scope','$http','$stateParams','$state',
@@ -186,28 +105,6 @@ angular.module('odsjs').controller('odsjsAppJobPropCtrl',
     }]);      
 
 
-
-angular.module('odsjs').controller('odsjsAppJobDtlCtrl',
-    ['$scope','$http','$stateParams','$log',
-    function($scope,$http,$stateParams,$log){
-        
-   $log.debug("odsjsAppJobDtlCtrl stateparams="+JSON.stringify($stateParams));
-
-         $scope.go = function(state) {
-   $log.debug('odsjsAppJobDtlCtrl go');
-      $state.go(state);
-    };       
-        
-		$http.get("get_oracle_data.php?sqlStr="
-                + "select owner,job_name, job_style, program_owner,program_name, job_type, job_action,number_of_arguments, schedule_name, schedule_type, start_date, repeat_interval, enabled,state, run_count, last_start_date, last_run_duration, next_run_date, logging_level, EVENT_QUEUE_OWNER, EVENT_QUEUE_NAME,EVENT_QUEUE_AGENT,EVENT_CONDITION,FILE_WATCHER_OWNER, FILE_WATCHER_NAME " +
-                  "from all_scheduler_jobs order by owner desc")
-		.success(function(response){
-		    $scope.jobData=response;
-		})
-		.error(function(){
-		});
-     
-    }]);      
 
 /*
 odsjsApp.controller('odsjsAppJobDtlCtrl',

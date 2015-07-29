@@ -32,7 +32,45 @@ function dbmsschedulerService($http,$log){
         });
 
       }
+/*
+      var _jobDetail=[];
+      
+      var _getJobDetail = function($param){
+            
+        $http.get("get_oracle_data.php?sqlStr="
+        + "select owner,job_name, job_style, program_owner,program_name, job_type, job_action,number_of_arguments, schedule_name, schedule_type, start_date, repeat_interval, enabled,state, run_count, last_start_date, last_run_duration, next_run_date, logging_level, EVENT_QUEUE_OWNER, EVENT_QUEUE_NAME,EVENT_QUEUE_AGENT,EVENT_CONDITION,FILE_WATCHER_OWNER, FILE_WATCHER_NAME " +
+          "from all_scheduler_jobs order by owner desc")
+        .success(function(response){
+            angular.copy(response, _jobDetail); 
+   
+        })
+        .error(function(){
+        });
 
+      }
+      */
+var _jobNtfn=[];
+      
+      var _getJobNtfn = function($params){
+            
+        var  jobnotificationquery = "select recipient,sender, subject, body, filter_condition, LISTAGG(event, ', ') within group (order by EVENT_FLAG) events "
+                 +" from ALL_SCHEDULER_NOTIFICATIONS " +
+                  " where 1=1 " +
+                  " and owner = '" + $params.jowner  + "'" +
+                  " and job_name = '" + $params.jname  + "'" +
+                  " group by owner,job_name, job_subname, recipient,sender, subject, body, filter_condition"
+          ;
+		return $http.get("get_oracle_data.php?sqlStr="
+                + jobnotificationquery)
+                .success(function(response){
+            angular.copy(response, _jobNtfn); 
+   
+        })
+        .error(function(){
+        });
+        
+
+      }
  
     var _addNewMovie = function(movie){
         _movies.splice(0, 0, movie);
@@ -41,6 +79,11 @@ function dbmsschedulerService($http,$log){
     return{
         jobs: _jobData,
         getJobList: _getJoblist
+        /*,
+        jobDetail: _jobDetail,
+        getJobDetail: _getJobDetail*/
+        ,jobNtfn: _jobNtfn,
+        getJobNtfn: _getJobNtfn
     };
     
     };

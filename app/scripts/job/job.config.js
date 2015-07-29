@@ -4,12 +4,74 @@
  * and open the template in the editor.
  *
 */
+(function() {
+    'use strict';
+    
+
+angular.module('odsjs.job').config( jobConfig);
+
+jobConfig.$inject = ['$stateProvider','$urlRouterProvider'];
 
 
-angular.module('odsjs.job').config( function($stateProvider, $urlRouterProvider) {
-    console.debug('config b');
+function jobConfig($stateProvider, $urlRouterProvider) {
+    console.debug('config b.job');
     
     // $urlRouterProvider.when("/job", "/job/list");
+      $stateProvider
+            .state('job', {
+            url: "/job",
+            views: {
+                "viewA": {
+                    controller: 'job.list.controller',
+                    controllerAs: 'joblist',
+                    templateUrl: 'job.list.html'
+                },
+                "viewB": {
+                    template: "route1.viewB"
+                }
+            }
+        })
+        .state('job.details', {
+            url: "/:jowner/:jname/details",
+            views: {
+                "viewc": {
+                    controller: 'job.detail.controller',
+                    templateUrl: 'job.details.html'
+                },
+                "viewB@": {
+                    template: 'selcted view b'
+                    //controller: 'odsjsAppJobListCtrl'
+                }
+            }
+        })        
+        .state('job.notifications', {
+            url: "/:jowner/:jname/notifications",
+            views: {
+                "viewc": {
+                     controller: 'odsjsAppJobNtfnCtrl',
+                     templateUrl: 'job.notification.html'
+                },
+                "viewB@": {
+                    template: 'selcted notifications view '
+                    //controller: 'odsjsAppJobListCtrl'
+                }
+            }
+        })
+        .state('job.properties', {
+            url: "/:jowner/:jname/properties",
+            views: {
+                "viewc": {
+                     //controller: 'odsjsAppJobNtfnCtrl',
+                     controller: 'odsjsAppJobPropCtrl',
+                     templateUrl: 'job.properties.html'
+                },
+                "viewB@": {
+                    template: 'selcted properties view '
+                    //controller: 'odsjsAppJobListCtrl'
+                }
+            }
+        })        
+        ;
     /*
   $stateProvider
           .state('scheduler.job',{
@@ -59,5 +121,6 @@ onEnter: function(){console.log("enter job");}
     template: 'welcome to log4'
   });
     */
-});
+};
         
+})();

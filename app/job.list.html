@@ -1,23 +1,11 @@
- 
-<div ng-Hde="currentJob">
-<table st-table="displayJobData"  st-safe-src="jobData" class="table" border=1 >
-    <thead>
-        <tr>
-            <th ng-repeat="(key, value) in displayJobData[0]" ng-if="key != 'isSelected'"> {{key}} </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr  st-select-row="data" ng-repeat="data in displayJobData">
-                    <!--<td><a ui-sref="scheduler.job.details({jowner: data.OWNER, jname: data.JOB_NAME}) ">details</a></td> 
-                    <td><a ui-sref="scheduler.job.notifications({jowner: data.OWNER, jname: data.JOB_NAME}) ">ntfn</a></td> 
-                    -->
-                    <td ng-repeat="(key,d) in data" ng-if="key != 'isSelected'" >{{d}}</td>
-        </tr>
-    </tbody>
-</table>
-</div>
 
-<div ng-Show="hasSelection">
+
+<select ng-options="value.JOB_NAME group by value.OWNER for (key,value) in jobData" ng-model="currentJob" ng-change="dochangeselection()">
+    <option value=""> --Select Job --</option>    
+</select>
+
+
+<div ng-Show="currentJob.OWNER">
     <a ui-sref="." ui-sref-opts="{reload: true}">Back</a></li> 
 
 <h3>{{currentJob.OWNER}} - {{currentJob.JOB_NAME}}</h3>

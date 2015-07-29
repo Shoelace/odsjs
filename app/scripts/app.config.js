@@ -35,59 +35,9 @@ function appConfig ($stateProvider, $urlRouterProvider,$locationProvider,$logPro
                 }
             }
         })
-        .state('job', {
-            url: "/job",
-            views: {
-                "viewA": {
-                    controller: 'odsjsAppJobListCtrl',
-                    controllerAs: 'joblist',
-                    templateUrl: 'job.list.html'
-                },
-                "viewB": {
-                    template: "route1.viewB"
-                }
-            }
-        })
-        .state('job.details', {
-            url: "/:jowner/:jname/details",
-            views: {
-                "viewc": {
-                    controller: 'odsjsAppJobDtlCtrl',
-                    templateUrl: 'job.details.html'
-                },
-                "viewB@": {
-                    template: 'selcted view b'
-                    //controller: 'odsjsAppJobListCtrl'
-                }
-            }
-        })        
-        .state('job.notifications', {
-            url: "/:jowner/:jname/notifications",
-            views: {
-                "viewc": {
-                     controller: 'odsjsAppJobNtfnCtrl',
-                     templateUrl: 'job.notifcations.html'
-                },
-                "viewB@": {
-                    template: 'selcted notifications view '
-                    //controller: 'odsjsAppJobListCtrl'
-                }
-            }
-        })
-        .state('job.properties', {
-            url: "/:jowner/:jname/properties",
-            views: {
-                "viewc": {
-                     //controller: 'odsjsAppJobNtfnCtrl',
-                     controller: 'odsjsAppJobPropCtrl',
-                     templateUrl: 'job.properties.html'
-                },
-                "viewB@": {
-                    template: 'selcted properties view '
-                    //controller: 'odsjsAppJobListCtrl'
-                }
-            }
-        })        
+                /*
+        
+    */
         ;
         
     /*

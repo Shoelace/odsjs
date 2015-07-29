@@ -1,4 +1,5 @@
-<table st-table="displaynotificationData"  st-safe-src="jobnotificationData" class="table" border=1 >
+<pre ng-show="jobNtfn.length==0">No Notifications defined</pre>
+<table st-table="displaynotificationData"  st-safe-src="jobNtfn" class="table" border=1 >
     <thead>
         <tr>
             <th ng-repeat="(key, value) in displaynotificationData[0]" ng-if="key != 'isSelected'"> {{key}} </th>
