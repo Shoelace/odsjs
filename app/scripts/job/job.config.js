@@ -18,12 +18,12 @@ function jobConfig($stateProvider, $urlRouterProvider) {
     
     // $urlRouterProvider.when("/job", "/job/list");
       $stateProvider
-            .state('job', {
+            .state('app.job', {
             url: "/job",
             views: {
                 "viewA": {
                     controller: 'job.list.controller',
-                    controllerAs: 'joblist',
+                    controllerAs: 'vm',
                     templateUrl: 'job.list.html'
                 },
                 "viewB": {
@@ -31,11 +31,11 @@ function jobConfig($stateProvider, $urlRouterProvider) {
                 }
             }
         })
-        .state('job.details', {
+        .state('app.job.details', {
             url: "/:jowner/:jname/details",
             views: {
                 "viewc": {
-                    controller: 'job.detail.controller',
+                   // controller: 'job.detail.controller',
                     templateUrl: 'job.details.html'
                 },
                 "viewB@": {
@@ -44,11 +44,11 @@ function jobConfig($stateProvider, $urlRouterProvider) {
                 }
             }
         })        
-        .state('job.notifications', {
+        .state('app.job.notifications', {
             url: "/:jowner/:jname/notifications",
             views: {
                 "viewc": {
-                     controller: 'odsjsAppJobNtfnCtrl',
+                     controller: 'job.notification.controller',
                      templateUrl: 'job.notification.html'
                 },
                 "viewB@": {
@@ -56,21 +56,44 @@ function jobConfig($stateProvider, $urlRouterProvider) {
                     //controller: 'odsjsAppJobListCtrl'
                 }
             }
-        })
-        .state('job.properties', {
+        })        
+        .state('app.job.arguments', {
+            url: "/:jowner/:jname/arguments",
+            views: {
+                "viewc": {
+                     controller: 'job.arguments.controller',
+                     templateUrl: 'job.arguments.html'
+                },
+                "viewB@": {
+                    template: 'selcted arguments view '
+                    //controller: 'odsjsAppJobListCtrl'
+                }
+            }
+        })       
+         .state('app.job.properties', {
             url: "/:jowner/:jname/properties",
             views: {
                 "viewc": {
-                     //controller: 'odsjsAppJobNtfnCtrl',
-                     controller: 'odsjsAppJobPropCtrl',
+                    // controller: 'job.arguments.controller',
                      templateUrl: 'job.properties.html'
                 },
                 "viewB@": {
                     template: 'selcted properties view '
-                    //controller: 'odsjsAppJobListCtrl'
                 }
             }
-        })        
+        })   
+        .state('app.job.runlog', {
+            url: "/:jowner/:jname/runlog",
+            views: {
+                "viewc": {
+                    // controller: 'job.arguments.controller',
+                     templateUrl: 'job.runlog.html'
+                },
+                "viewB@": {
+                    template: 'selcted runlog view '
+                }
+            }
+        })           
         ;
     /*
   $stateProvider

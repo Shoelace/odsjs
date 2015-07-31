@@ -1,21 +1,21 @@
 
 
-<select ng-options="value.JOB_NAME group by value.OWNER for (key,value) in jobData" ng-model="currentJob" ng-change="dochangeselection()">
+<select ng-options="value.JOB_NAME group by value.OWNER for (key,value) in vm.jobData" ng-model="vm.currentJob" ng-change="vm.dochangeselection()">
     <option value=""> --Select Job --</option>    
 </select>
 
 
-<div ng-Show="currentJob.OWNER">
+<div ng-Show="vm.currentJob.OWNER">
     <a ui-sref="." ui-sref-opts="{reload: true}">Back</a></li> 
 
-<h3>{{currentJob.OWNER}} - {{currentJob.JOB_NAME}}</h3>
+<h3>{{vm.currentJob.OWNER}} - {{vm.currentJob.JOB_NAME}}</h3>
 
 <tabset>
-    <tab heading="Details"       ui-sref=".details({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})" ></tab>
-    <tab heading="Notifications" ui-sref=".notifications({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})" ></tab>
-    <tab heading="Arguments"     ui-sref=".arguments({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
-    <tab heading="Properties"    ui-sref=".properties({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
-    <tab heading="Run Log"       ui-sref=".runlog({jowner: currentJob.OWNER, jname: currentJob.JOB_NAME})"></tab>
+    <tab heading="Details"       ui-sref=".details({jowner: vm.currentJob.OWNER, jname: vm.currentJob.JOB_NAME})" ></tab>
+    <tab heading="Notifications" ui-sref=".notifications({jowner: vm.currentJob.OWNER, jname: vm.currentJob.JOB_NAME})" ></tab>
+    <tab heading="Arguments"     ui-sref=".arguments({jowner: vm.currentJob.OWNER, jname: vm.currentJob.JOB_NAME})"></tab>
+    <tab heading="Properties"    ui-sref=".properties({jowner: vm.currentJob.OWNER, jname: vm.currentJob.JOB_NAME})"></tab>
+    <tab heading="Run Log"       ui-sref=".runlog({jowner: vm.currentJob.OWNER, jname: vm.currentJob.JOB_NAME})"></tab>
 </tabset>
     
 <div ui-view="viewc"></div>

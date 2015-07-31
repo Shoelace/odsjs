@@ -17,26 +17,24 @@ AppController.$inject =     [];
 function AppController(){
   var vm = this;
   
-    /*
-    $scope.tabData   = [
+   vm.tabData   = [
       {
         heading: 'Jobs',
-        route:   'scheduler.job.list'
+        route:   '.job'
       },
       {
         heading: 'Programs',
-        route:   'scheduler.program'
+        route:   '.program'
         ,disabled: true
       },
       {
         heading: 'windows',
-        route:   'scheduler.window'
+        route:   '.window'
         ,disabled: true
       }
     ];
-    */
     
-    };
+};
         
         
 })();

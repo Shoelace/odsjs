@@ -24,6 +24,13 @@ function appConfig ($stateProvider, $urlRouterProvider,$locationProvider,$logPro
 
 
     $stateProvider
+    .state('app', {
+    url:         '',
+    controller: 'AppController',
+    controllerAs: 'vm',
+    templateUrl: 'app.html'
+  })
+                /*
         .state('index', {
             url: "",
             views: {
@@ -35,7 +42,6 @@ function appConfig ($stateProvider, $urlRouterProvider,$locationProvider,$logPro
                 }
             }
         })
-                /*
         
     */
         ;

@@ -1,0 +1,14 @@
+<pre ng-show="jobArgs.length==0">No Arguments defined</pre>
+<table st-table="displayArgsData"  st-safe-src="jobArgs" class="table" border=1 style="width: auto;">
+    <thead>
+        <tr>
+            <th ng-repeat="(key, value) in displayArgsData[0]" ng-if="key != 'isSelected'"> {{key}} </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr st-select-row="data" st-select-mode="single" ng-repeat="data in displayArgsData" >
+            <td ng-repeat="(key,d) in data" ng-if="key != 'isSelected'" >{{d}}</td>
+        </tr>
+    </tbody>
+</table>
+
