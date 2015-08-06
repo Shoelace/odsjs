@@ -37,6 +37,19 @@
 <slThemeSwitcher></slThemeSwitcher>
 <ui-view></ui-view>
 
+<div ng-controller="windows.controller">
+    <pre>
+    {{hello}}
+    </pre>
+    header
+    <pre>
+    {{header}}
+    </pre>
+    body
+    <pre>
+    {{body}}
+    </pre>
+</div>
 
 
             <div id="allscripts">
@@ -67,6 +80,9 @@
         <script src="scripts/job/job.detail.controller.js"></script>
         <script src="scripts/job/job.notification.controller.js"></script>
         <script src="scripts/job/job.arguments.controller.js"></script>
+
+        <script src="scripts/windows/windows.controller.js"></script>
+
         <script src="scripts/dbmsscheduler.service.js"></script>
          <!-- other modules go here -->
             </div>

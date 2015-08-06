@@ -22,7 +22,7 @@
    console.log("arguments stateparams="+JSON.stringify($stateParams));
 
       $scope.jobArgs=dbmsschedulerService.jobArgs;
-        dbmsschedulerService.getJobArgs($stateParams);
+      dbmsschedulerService.getJobArgs($stateParams);
           
         
 
