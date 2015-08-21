@@ -1,36 +1,32 @@
-
 <table  class="table" border=1 style="width: auto;">
-                <thead>
-                    <tr>
-                        <th >Name</th>
-                        <th >Value</th>
-                    </tr>	
-                </thead>
-                <tbody>
-                    <tr><td>OWNER</td><td>{{currentJob.OWNER}}</td></tr>
-                <tr><td>JOB_NAME</td><td>{{currentJob.JOB_NAME}}</td></tr>
-                <tr><td>JOB_CLASS</td><td>{{currentJob.JOB_CLASS}}</td></tr>
-                <tr><td>COMMENTS</td><td>{{currentJob.COMMENTS}}</td></tr>
-                <tr><td>ENABLED</td><td>{{currentJob.ENABLED}}</td></tr>
-                <tr><td>CREDENTIAL_NAME</td><td>{{currentJob.CREDENTIAL_NAME}}</td></tr>
-                <tr><td>DESTINATION</td><td>{{currentJob.DESTINATION}}</td></tr>
-                <tr><td>PROGRAM_NAME</td><td>{{currentJob.PROGRAM_NAME}}</td></tr>
-                <tr><td>JOB_TYPE</td><td>{{currentJob.JOB_TYPE}}</td></tr>
-                <tr><td>JOB_ACTION</td><td>{{currentJob.JOB_ACTION}}</td></tr>
-                <tr><td>NUMBER_OF_ARGUMENTS</td><td>{{currentJob.NUMBER_OF_ARGUMENTS}}</td></tr>
-                <tr><td>SCHEDULE_OWNER</td><td>{{currentJob.SCHEDULE_OWNER}}</td></tr>
-                <tr><td>SCHEDULE_NAME</td><td>{{currentJob.SCHEDULE_NAME}}</td></tr>
-                <tr><td>SCHEDULE_TYPE</td><td>{{currentJob.SCHEDULE_TYPE}}</td></tr>
-                <tr><td>START_DATE</td><td>{{currentJob.START_DATE}}</td></tr>
-                <tr><td>REPEAT_INTERVAL</td><td>{{currentJob.REPEAT_INTERVAL}}</td></tr>
-                <tr><td>END_DATE</td><td>{{currentJob.END_DATE}}</td></tr>
-                <tr><td>EVENT_QUEUE_OWNER</td><td>{{currentJob.EVENT_QUEUE_OWNER}}</td></tr>
-                <tr><td>EVENT_QUEUE_NAME</td><td>{{currentJob.EVENT_QUEUE_NAME}}</td></tr>
-                <tr><td>EVENT_QUEUE_AGENT</td><td>{{currentJob.EVENT_QUEUE_AGENT}}</td></tr>
-                <tr><td>EVENT_CONDITION</td><td>{{currentJob.EVENT_CONDITION}}</td></tr>
-                <tr><td>FILE_WATCHER_OWNER</td><td>{{currentJob.FILE_WATCHER_OWNER}}</td></tr>
-                <tr><td>FILE_WATCHER_NAME</td><td>{{currentJob.FILE_WATCHER_NAME}}</td></tr>
-                </td>
-                    </tr>
-                </tbody>
-            </table>
+        <thead>
+            <tr><th >Name</th>     <th >Value</th></tr>	
+        </thead>
+        <tbody>
+            <tr><td>OWNER</td><td>{{jobDetails.OWNER}}</td></tr>
+            <tr><td>JOB_NAME</td><td>{{jobDetails.JOB_NAME}}</td></tr>
+            <tr><td>JOB_CLASS</td><td>{{jobDetails.JOB_CLASS}}</td></tr>
+            <tr><td>COMMENTS</td><td>{{jobDetails.COMMENTS}}</td></tr>
+            <tr><td>ENABLED</td><td>{{jobDetails.ENABLED}}</td></tr>
+            <tr><td>CREDENTIAL_NAME</td><td>{{jobDetails.CREDENTIAL_NAME}}</td></tr>
+            <tr><td>DESTINATION</td><td>{{jobDetails.DESTINATION}}</td></tr>
+            <tr><td>PROGRAM_NAME</td><td>{{jobDetails.PROGRAM_NAME}}</td></tr>
+            <tr><td>JOB_TYPE</td><td>{{jobDetails.JOB_TYPE}}</td></tr>
+            <tr><td>JOB_ACTION</td><td>{{jobDetails.JOB_ACTION}}</td></tr>
+            <tr><td>NUMBER_OF_ARGUMENTS</td><td>{{jobDetails.NUMBER_OF_ARGUMENTS}}</td></tr>
+            <tr><td>SCHEDULE_OWNER</td><td>{{jobDetails.SCHEDULE_OWNER}}</td></tr>
+            <tr><td>SCHEDULE_NAME</td><td>{{jobDetails.SCHEDULE_NAME}}</td></tr>
+            <tr><td>SCHEDULE_TYPE</td><td>{{jobDetails.SCHEDULE_TYPE}}</td></tr>
+            <tr><td>START_DATE</td><td>{{jobDetails.START_DATE}}</td></tr>
+            <tr><td>REPEAT_INTERVAL</td><td>{{jobDetails.REPEAT_INTERVAL}}</td></tr>
+            <tr><td>END_DATE</td><td>{{jobDetails.END_DATE}}</td></tr>
+            <tr><td>EVENT_QUEUE_OWNER</td><td>{{jobDetails.EVENT_QUEUE_OWNER}}</td></tr>
+            <tr><td>EVENT_QUEUE_NAME</td><td>{{jobDetails.EVENT_QUEUE_NAME}}</td></tr>
+            <tr><td>EVENT_QUEUE_AGENT</td><td>{{jobDetails.EVENT_QUEUE_AGENT}}</td></tr>
+            <tr><td>EVENT_CONDITION</td><td>{{jobDetails.EVENT_CONDITION}}</td></tr>
+            <tr><td>FILE_WATCHER_OWNER</td><td>{{jobDetails.FILE_WATCHER_OWNER}}</td></tr>
+            <tr><td>FILE_WATCHER_NAME</td><td>{{jobDetails.FILE_WATCHER_NAME}}</td></tr>
+            </td>
+        </tr>
+    </tbody>
+</table>

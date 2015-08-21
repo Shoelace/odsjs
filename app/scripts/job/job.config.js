@@ -35,7 +35,7 @@ function jobConfig($stateProvider, $urlRouterProvider) {
             url: "/:jowner/:jname/details",
             views: {
                 "viewc": {
-                   // controller: 'job.detail.controller',
+                    controller: 'job.detail.controller',
                     templateUrl: 'job.details.html'
                 },
                 "viewB@": {
@@ -86,14 +86,21 @@ function jobConfig($stateProvider, $urlRouterProvider) {
             url: "/:jowner/:jname/runlog",
             views: {
                 "viewc": {
-                    // controller: 'job.arguments.controller',
+                     controller: 'job.runlog.controller',
+                     controllerAs: 'vm',
                      templateUrl: 'job.runlog.html'
                 },
                 "viewB@": {
                     template: 'selcted runlog view '
                 }
             }
-        })           
+        })
+        .state('app.job.runlog.log4', {
+                url:         '/log4/{log4id}',
+                templateUrl: 'job.runlog.log4.html',
+                controller: 'job.runlog.log4.controller',
+                controllerAs: 'vm'
+        })
         ;
     /*
   $stateProvider

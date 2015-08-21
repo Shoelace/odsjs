@@ -104,7 +104,7 @@ $createPkgHeader .= "\nEND $packageName;";
 //echo "<h2>OUT: Package header code</h2><pre>$createPkgHeader</pre>";
 
 $stid = oci_parse($conn, $createPkgHeader);
-oci_execute($stid)
+oci_execute($stid);
 //echo oci_execute($stid) ? "<p><em>Package header $packageName compiled.</em></p>" : "<p><em>Error.</em></p>";
 
 
@@ -128,7 +128,7 @@ $createPkgBody .= "\nEND $packageName;";
 
 //echo "<h2>OUT: Package body code</h2><pre>$createPkgBody</pre>";
 $stid = oci_parse($conn, $createPkgBody);
-oci_execute($stid)
+oci_execute($stid);
 //echo oci_execute($stid) ? "<p><em>Package body $packageName compiled.</em></p>" : "<p><em>Error.</em></p>";
 
 oci_close($conn);

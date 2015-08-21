@@ -58,9 +58,10 @@ $log.debug("JobListCtrl stateparams="+JSON.stringify($stateParams));
 
 
    function dochangeselection(){
+$log.debug("dochangeselection()") ;
 
         if (vm.currentJob){
-        if ($state.current.name=='job'){
+        if ($state.current.name=='app.job'){
             //$state.go('.details');
              $state.go( '.details', {jowner: vm.currentJob.OWNER, jname: vm.currentJob.JOB_NAME} );
         }else{

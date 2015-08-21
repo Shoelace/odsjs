@@ -13,7 +13,7 @@ angular.module('odsjs').controller('job.detail.controller',
     ['$scope','$stateParams','$state','$log','dbmsschedulerService',
     function($scope,$stateParams,$state,$log,dbmsschedulerService){
         
-   $log.debug("odsjsAppJobDtlCtrl stateparams="+JSON.stringify($stateParams));
+   $log.debug("job.detail.controller stateparams="+JSON.stringify($stateParams));
 
 /*
          $scope.go = function(state) {
@@ -22,8 +22,8 @@ angular.module('odsjs').controller('job.detail.controller',
     };    
     */
    //dont need to load stuff.. included in currentJob
-   //$scope.jobDetails=dbmsschedulerService.jobDetail;
-    //    dbmsschedulerService.getJobDetail($stateParams);
+   $scope.jobDetails=dbmsschedulerService.jobDetail;
+       dbmsschedulerService.getJobDetail($stateParams);
         
      
     }]);      

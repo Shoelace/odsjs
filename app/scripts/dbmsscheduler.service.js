@@ -20,7 +20,11 @@ function dbmsschedulerService($http,$log){
        var model= {}
    model['name'] = 'odsjs';
    model['queries'] = {};
-   model['queries']['selectJobs'] = {'sql': `select owner,job_name, job_style
+   model['queries']['selectJobs'] = {'sql': `select owner,job_name
+     from dba_scheduler_jobs
+     order by owner desc` };   
+ 
+   model['queries']['selectJobDetails'] = {'sql': `select owner,job_name, job_style
         , program_owner,program_name
         , job_type, job_action,number_of_arguments
         , schedule_name, schedule_type
@@ -30,7 +34,11 @@ function dbmsschedulerService($http,$log){
         , EVENT_QUEUE_OWNER, EVENT_QUEUE_NAME ,EVENT_QUEUE_AGENT,EVENT_CONDITION
         , FILE_WATCHER_OWNER, FILE_WATCHER_NAME
      from dba_scheduler_jobs
-     order by owner desc` };
+                   where 1=1 
+                   and owner = ? 
+                   and job_name = ?      
+     order by owner desc`
+ , 'in' : ['jowner', 'jname']};
 
   model['queries']['selectNotifcations'] = 
         { 'sql': `select recipient,sender, subject, body, filter_condition, LISTAGG(event, ', ') within group (order by EVENT_FLAG) events 
@@ -50,12 +58,27 @@ function dbmsschedulerService($http,$log){
                   " "
                  , 'in' : ['jowner', 'jname']
    };  
-
-       
+    model['queries']['selectRunlog'] = 
+            { 'sql': "select owner,job_name,job_subname, log_id, log_date, operation, status, additional_info "
+                 +" from DBA_SCHEDULER_JOB_LOG " +
+                  " where 1=1 " +
+                  " and owner = ?" +
+                  " and job_name = ?" +
+                  " order by log_date desc"
+                 , 'in' : ['jowner', 'jname']
+   };  
+    model['queries']['selectLog4'] = 
+            { 'sql': "select logtimestamp, loggername, logmarker, logmessage "
+                 +" from log_table " +
+                  " where 1=1 " +
+                  " and logid = ?" +
+                  " order by logtimestamp asc"
+            , 'in' : ['log4id']
+   };        
    
    $http.post("build-api-oracle-procedures.php",  model )
         .then(function(response){
-            $log.debug("in then"+response);
+            $log.debug("in then:"+response.data);
     //$scope.hello = response.data;
     //$scope.header = response.data.header;
     //$scope.body = response.data.body;
@@ -77,28 +100,23 @@ function dbmsschedulerService($http,$log){
         });
 
       }
-/*
+
       var _jobDetail=[];
       
-      var _getJobDetail = function($param){
+      var _getJobDetail = function($params){
+       return $http.post("get_oracle_data2.php?qryname=odsjs_pkg.selectJobDetails",$params)
+        .then(function(response){
+            $log.debug("_jobDetail:"+JSON.stringify(response));
+            angular.copy(response.data[0], _jobDetail); //only 1 record expcted
             
-        $http.get("get_oracle_data.php?sqlStr="
-        + "select owner,job_name, job_style, program_owner,program_name, job_type, job_action,number_of_arguments, schedule_name, schedule_type, start_date, repeat_interval, enabled,state, run_count, last_start_date, last_run_duration, next_run_date, logging_level, EVENT_QUEUE_OWNER, EVENT_QUEUE_NAME,EVENT_QUEUE_AGENT,EVENT_CONDITION,FILE_WATCHER_OWNER, FILE_WATCHER_NAME " +
-          "from all_scheduler_jobs order by owner desc")
-        .success(function(response){
-            angular.copy(response, _jobDetail); 
-   
-        })
-        .error(function(){
+            return _jobNtfn;
         });
+    }
 
-      }
-      */
-var _jobNtfn=[];
+
+    var _jobNtfn=[];
       
       var _getJobNtfn = function($params){
-
-          
        return $http.post("get_oracle_data2.php?qryname=odsjs_pkg.selectNotifcations",$params)
         .then(function(response){
             $log.debug("_jobNtfn:"+JSON.stringify(response));
@@ -106,24 +124,7 @@ var _jobNtfn=[];
             
             return _jobNtfn;
         });
-        /*
-        var  jobnotificationquery = "select recipient,sender, subject, body, filter_condition, LISTAGG(event, ', ') within group (order by EVENT_FLAG) events "
-                 +" from DBA_SCHEDULER_NOTIFICATIONS " +
-                  " where 1=1 " +
-                  " and owner = '" + $params.jowner  + "'" +
-                  " and job_name = '" + $params.jname  + "'" +
-                  " group by owner,job_name, job_subname, recipient,sender, subject, body, filter_condition"
-          ;
-		return $http.get("get_oracle_data.php?sqlStr="
-                + jobnotificationquery)
-                .success(function(response){
-            angular.copy(response, _jobNtfn); 
-   
-        })
-        .error(function(){
-        });
-          */
-        
+
 
       }
  
@@ -141,37 +142,57 @@ var _jobArgs=[];
                 
                 return _jobArgs;
         });
-        /*var  jobargsquery = "select argument_position, argument_name, argument_type , value, out_argument"
-                 +" from dba_SCHEDULER_JOB_ARGS " +
-                  " where 1=1 " +
-                  " and owner = '" + $params.jowner  + "'" +
-                  " and job_name = '" + $params.jname  + "'" +
-                  " "
-          ;
-		return $http.get("build-api-oracle-procedures.php")
-                .success(function(response){
-            angular.copy(response, _jobArgs); 
    
-        })
-           
-          
-        .error(function(){
-        });
-          */
-        
-
       }
+      
+      var _jobRunlog=[];
+      
+      var _getJobRunlog = function($params){
+
+          
+         return $http.post("get_oracle_data2.php?qryname=odsjs_pkg.selectRunlog",$params)
+        .then(function(response){
+            $log.debug("_getJobRunlog:"+JSON.stringify(response));
+            
+            //if (response.data )
+                angular.copy(response.data, _jobRunlog); 
+                
+                return _jobRunlog;
+        });
+   
+      }
+      var _jobLog4=[];
+      
+      //used to get only desired params from stateparams
+      var cloneAndPluck = function(sourceObject, keys) {
+    var newObject = {};
+    keys.forEach(function(key) { newObject[key] = sourceObject[key]; });
+    return newObject;
+}
+
+
+      var _getJobLog4 = function($params){
+
+
+         return $http.post("get_oracle_data2.php?qryname=odsjs_pkg.selectLog4",cloneAndPluck($params, model['queries']['selectLog4']['in'])) //{log4id: $params.log4id} )
+        .then(function(response){
+            $log.debug("_getJobLog4:"+JSON.stringify(response));
+            
+            //if (response.data )
+                angular.copy(response.data, _jobLog4); 
+                
+                return _jobLog4;
+        });
+   
+      }      
  
     return{
-        jobs: _jobData,
-        getJobList: _getJoblist
-        /*,
-        jobDetail: _jobDetail,
-        getJobDetail: _getJobDetail*/
-        ,jobNtfn: _jobNtfn,
-        getJobNtfn: _getJobNtfn
-        ,jobArgs: _jobArgs,
-        getJobArgs: _getJobArgs
+         jobs: _jobData,        getJobList: _getJoblist
+        ,jobDetail: _jobDetail ,getJobDetail: _getJobDetail
+        ,jobNtfn: _jobNtfn     ,getJobNtfn: _getJobNtfn
+        ,jobArgs: _jobArgs     ,getJobArgs: _getJobArgs
+        ,jobRunlog: _jobRunlog     ,getJobRunlog: _getJobRunlog
+        ,jobLog4: _jobLog4     ,getJobLog4: _getJobLog4
     };
     
     };

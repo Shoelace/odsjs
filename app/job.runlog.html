@@ -1,34 +1,20 @@
-<div class="row">
-    <div class="table-responsive col-md-6">
-<pre>query:{{joblogquery}}</pre>
-            <table st-table="displayJoblog"  st-safe-src="joblogData" class="table" border=1 ng-show="joblogReady" style="width: auto;">
-                <thead>
-                    <tr>
-                        <th ng-repeat="(key, value) in displayJoblog[0]" ng-if="key != 'isSelected'"> {{key}} </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr st-select-row="data" st-select-mode="single" ng-repeat="data in displayJoblog"  >
-                        <td ng-repeat="(key,d) in data" ng-if="key != 'isSelected'" >{{d}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <pre>joblogData{{joblogData}}</pre>   
-  </div>
-  <div class="table-responsive col-md-6">
-            <pre>query:{{jobrundetailquery}}</pre>
-            <table st-table="displayjobrundetail"  st-safe-src="jobrundetailData" class="table" border=1  style="width: auto;">
-                <thead>
-                    <tr>
-                        <th ng-repeat="(key, value) in displayjobrundetail[0]" ng-if="key != 'isSelected'"> {{key}} </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr st-select-row="data" st-select-mode="single" ng-repeat="data in displayjobrundetail"  >
-                        <td ng-repeat="(key,d) in data" ng-if="key != 'isSelected'" >{{d}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <pre>joblogData{{jobrundetailData}}</pre>  
-              </div>
-</div>
+<table st-table="displayJoblog"  st-safe-src="vm.jobRunlog" class="table" border=1 style="width: auto;">
+    <thead>
+        <tr>
+            <th>Log Date</th>
+            <th>Job Subname</th>
+            <th>Operation</th>
+            <th>Status</th>
+        </tr>	
+    </thead>
+    <tbody>
+        <tr st-select-row="data" st-select-mode="single" ng-repeat="data in displayJoblog"  >
+            <td>{{data.LOG_DATE}}</td>
+            <td>{{data.JOB_SUBNAME}}</td>
+            <td>{{data.OPERATION}}</td>
+            <td>{{data.STATUS}}</td>
+            <td><a ui-sref=".log4({log4id: data.LOG_ID})">{{data.LOG_ID}}</a></td>
+        </tr>
+    </tbody>
+</table>
+<div ui-view></div>
