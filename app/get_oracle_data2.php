@@ -1,5 +1,9 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
+//header('Access-Control-Allow-Origin: *');
+
+/* Allowed custom header */
+//   header("Access-Control-Allow-Headers: Content-Type");
 
 // Include database credentials.
 require_once('config.inc.php');
@@ -41,10 +45,10 @@ if (empty($q) ){
             oci_bind_by_name($stid, ":i_$key", $params[$key]);
         }
     }
-    
+
     $curs = oci_new_cursor($conn);
     oci_bind_by_name($stid, ":cursbv", $curs, -1, OCI_B_CURSOR);
-    
+
     $r = oci_execute($stid);
 
     // Execute the REF CURSOR like a normal statement id
